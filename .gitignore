@@ -1,0 +1,9 @@
+index.php
+js/*
+xml/*
+tpl/*
+css/*
+img/*
+php/*
+translations/*
+!js/lukewarm.js
