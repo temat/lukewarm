@@ -3,7 +3,14 @@ var lukewarmSettings = {
   'language': 'en'
 };
 
-$(document).ready(function() {  
+$(document).ready(function() { 
+  // Get current language.
+  var uri = new URI(document.location.href);
+  var uriData = uri.search(true);
+  if (typeof uriData.lang !== 'undefined' && uriData.lang.match(/^[a-z]{2}$/i)) {
+    lukewarmSettings.language = uriData.lang;
+  }
+  
   // Create Profile object.
   lukewarmProfile().init({
     language: lukewarmSettings.language,
@@ -15,13 +22,6 @@ $(document).ready(function() {
 
 // Profile loading success callback. 
 function lukewarmLoaded() {
-  // Get current language.
-  var uri = new URI(document.location.href);
-  var uriData = uri.search(true);
-  if (typeof uriData.lang !== 'undefined' && uriData.lang.match(/^[a-z]{2}$/i)) {
-    lukewarmSettings.language = uriData.lang;
-  }
-  
   // Build questions.
   preloader('show');
   $.ajax({
