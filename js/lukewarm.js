@@ -1,6 +1,6 @@
 var lukewarmSettings = {
   'baseUrl': '/',
-  'language': 'ru'
+  'language': 'en'
 };
 
 $(document).ready(function() {  
@@ -15,10 +15,19 @@ $(document).ready(function() {
 
 // Profile loading success callback. 
 function lukewarmLoaded() {
+  // Get current language.
+  var uri = new URI(document.location.href);
+  var uriData = uri.search(true);
+  if (typeof uriData.lang !== 'undefined' && uriData.lang.match(/^[a-z]{2}$/i)) {
+    lukewarmSettings.language = uriData.lang;
+  }
+  
   // Build questions.
   preloader('show');
   $.ajax({
-    url: lukewarmSettings.baseUrl + 'tpl/question.tpl',
+    url: lukewarmSettings.baseUrl + 'tpl/question.php',
+    data: {lang: lukewarmSettings.language},
+    method: 'GET',
     success: function(qTemplate) {
       preloader('hide');
       lukewarmProfile().buildQuestions('#questions', qTemplate);
@@ -45,7 +54,9 @@ function lukewarmLoaded() {
       // Build tabs.
       preloader('show');
       $.ajax({
-        url: lukewarmSettings.baseUrl + 'tpl/tabs.tpl',
+        url: lukewarmSettings.baseUrl + 'tpl/tabs.php',
+        data: {lang: lukewarmSettings.language},
+        method: 'GET',
         success: function(tTemplate) {
           preloader('hide');
           lukewarmProfile().buildTabs('#pagination', tTemplate);
@@ -54,7 +65,7 @@ function lukewarmLoaded() {
             $(this).tab('show');
           })
           $('#versesTab li:first').addClass('active');
-          $('#questions .question:first').addClass('in active');          
+          $('#questions .question:first').addClass('in active');
         }
       });     
       
@@ -103,16 +114,8 @@ function lukewarmError(jqXHR, textStatus, errorThrown, customText) {
   }
 }
 
-// Translates the strings to current language.
-function t(stringToTranslate) {
-  return stringToTranslate;
-}
-
 // Update current URI based on the data in the model.
 function updateUri() {
-  var uri = '#ggg';
-  var model = lukewarmProfile().model;
-  document.location = '#d';
 }
 
 // Show/hide ajax preloader.
