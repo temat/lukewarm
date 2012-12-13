@@ -89,9 +89,9 @@ function lukewarmModelUpdated(model, delta) {
     $('#badge' + q.qid).addClass(className);
   }
   
-  // Switch to the next question.
-  $('#page' + (q.qid + 1)).tab('show');
-  
+  // Switch to the next unanswered question.
+  $('#versesTab .badge-empty:lt(1)').parent('a').tab('show');
+   
   // Update the address bar.
   updateUri();
 }
