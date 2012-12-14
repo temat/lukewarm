@@ -4,7 +4,7 @@ var lukewarmSettings = {
 };
 
 $(document).ready(function() { 
-  // Get current language.
+  // Get current language....
   var uri = new URI(document.location.href);
   var uriData = uri.search(true);
   if (typeof uriData.lang !== 'undefined' && uriData.lang.match(/^(ru|en)$/i)) {
